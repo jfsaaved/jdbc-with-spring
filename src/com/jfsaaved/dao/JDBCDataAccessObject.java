@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import com.jfsaaved.model.Circle;
@@ -16,8 +17,9 @@ import com.jfsaaved.model.Circle;
 @Component
 public class JDBCDataAccessObject {
 	
-	@Autowired
+	
 	private DataSource dataSource;
+	private JdbcTemplate jdbcTemplate;
 	
 	public Circle getCircle(int id) {
 		Connection conn = null;
@@ -52,13 +54,28 @@ public class JDBCDataAccessObject {
 		return null;
 
 	}
+	
+	public int getCircleCount() {
+		String sql = "SELECT COUNT(*) FROM CIRCLE";
+		return jdbcTemplate.queryForInt(sql);
+	}
 
 	public DataSource getDataSource() {
 		return dataSource;
 	}
 
+	@Autowired
 	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
+		//this.dataSource = dataSource;
+	}
+
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 }

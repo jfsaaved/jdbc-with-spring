@@ -15,8 +15,10 @@ public class Main {
 		ctx = new ClassPathXmlApplicationContext("spring.xml");
 		JDBCDataAccessObject jdbcdao = ctx.getBean("JDBCDataAccessObject", JDBCDataAccessObject.class);
 		
-		Circle circle = jdbcdao.getCircle(1);
-		System.out.println(circle.getName());
+		//Circle circle = jdbcdao.getCircle(1);
+		//System.out.println(circle.getName());
+		
+		System.out.println(jdbcdao.getCircleCount());
 		
 	}
 

@@ -24,7 +24,7 @@ dependencies {
 	compile "org.apache.commons:commons-dbcp2:2.+"
 	compile "org.apache.derby:derbyclient:10.+"
 	compile "org.apache.derby:derby:10.+"
-	compile "org.springframework:spring-jdbc"
+	compile "org.springframework:spring-jdbc:2.+"
 	compile "org.springframework:spring-context:4.+"
     compile "org.springframework:spring-webmvc:4.+"
     compile "org.springframework.boot:spring-boot-starter-web:1.+"
