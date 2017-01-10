@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+
 import org.springframework.stereotype.Component;
 import com.jfsaaved.model.Circle;
 
@@ -20,7 +20,7 @@ public class JDBCDataAccessObject {
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-	private SimpleJdbcTemplate simpleJdbcTemplate;
+	private NamedParameterJdbcTemplate simpleJdbcTemplate;
 	
 	public DataSource getDataSource() {
 		return dataSource;
@@ -43,7 +43,7 @@ public class JDBCDataAccessObject {
 	
 	public int getCircleCount() {
 		String sql = "SELECT COUNT(*) FROM CIRCLE";
-		return jdbcTemplate.queryForInt(sql);
+		return jdbcTemplate.queryForObject(sql, Integer.class);
 	}
 	
 	public String getCircleName(int id) {

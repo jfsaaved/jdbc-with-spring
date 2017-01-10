@@ -3,6 +3,7 @@ package com.jfsaaved.main;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.jfsaaved.dao.HibernateDaoImpl;
 import com.jfsaaved.dao.JDBCDataAccessObject;
 import com.jfsaaved.dao.SimpleJdbcDaoImpl;
 import com.jfsaaved.model.Circle;
@@ -15,9 +16,9 @@ public class Main {
 		
 		ctx = new ClassPathXmlApplicationContext("spring.xml");
 		//JDBCDataAccessObject jdbcdao = ctx.getBean("JDBCDataAccessObject", JDBCDataAccessObject.class);
-		SimpleJdbcDaoImpl jdbcdao = ctx.getBean("simpleJdbcDaoImpl", SimpleJdbcDaoImpl.class);
+		//SimpleJdbcDaoImpl jdbcdao = ctx.getBean("simpleJdbcDaoImpl", SimpleJdbcDaoImpl.class);
+		HibernateDaoImpl jdbcdao = ctx.getBean("hibernateDaoImpl", HibernateDaoImpl.class);
 		System.out.println(jdbcdao.getCircleCount());
-		
 		
 		//Circle circle = jdbcdao.getCircle(1);
 		//System.out.println(circle.getName());
