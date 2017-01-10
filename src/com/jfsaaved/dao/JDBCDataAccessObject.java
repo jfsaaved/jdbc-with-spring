@@ -1,19 +1,17 @@
 package com.jfsaaved.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Component;
-
 import com.jfsaaved.model.Circle;
 
 @Component
@@ -22,40 +20,8 @@ public class JDBCDataAccessObject {
 	
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
-	
-	public Circle getCircle(int id) {
-		Connection conn = null;
-		
-		try{
-
-			conn = dataSource.getConnection();
-			
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM circle where id = ?");
-			ps.setInt(1, id);
-			
-			Circle circle = null;
-			ResultSet rs = ps.executeQuery();
-			if(rs.next()) {
-				circle = new Circle(id, rs.getString("name"));
-			}
-			
-			rs.close();
-			ps.close();
-			
-		return circle;
-		} catch (Exception e) {
-			System.out.println("ERROR");
-		} finally {
-			try {
-				conn.close();
-			} catch(SQLException se) {
-				System.out.println("ERROR");
-			}
-		}
-		
-		return null;
-
-	}
+	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+	private SimpleJdbcTemplate simpleJdbcTemplate;
 	
 	public DataSource getDataSource() {
 		return dataSource;
@@ -64,6 +30,7 @@ public class JDBCDataAccessObject {
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
+		this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 		//this.dataSource = dataSource;
 	}
 
@@ -96,6 +63,24 @@ public class JDBCDataAccessObject {
 		List<Circle> list = jdbcTemplate.query(sql, new CircleMapper());
 		return list;
 	}
+	
+//	public void insertCircle(Circle circle) {
+//		String sql = "INSERT INTO CIRCLE (ID, NAME) VALUES (?, ?)";
+//		jdbcTemplate.update(sql, new Object[] {circle.getId(), circle.getName()});
+//	}
+	
+	public void insertCircle(Circle circle) {
+		String sql = "INSERT INTO CIRCLE (ID, NAME) VALUES (:id, :name)";
+		SqlParameterSource nameParameters = new MapSqlParameterSource("id", circle.getId())
+				.addValue("name", circle.getName());
+		namedParameterJdbcTemplate.update(sql, nameParameters);
+	}
+	
+	public void createTriangleTable() {
+		String sql = "CREATE TABLE TRIANGLE (ID INTEGER, NAME VARCHAR(50))";
+		jdbcTemplate.execute(sql);
+	}
+	
 	
 	private static final class CircleMapper implements RowMapper {
 		@Override

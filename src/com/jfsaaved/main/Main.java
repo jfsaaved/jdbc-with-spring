@@ -21,7 +21,10 @@ public class Main {
 		//System.out.println(jdbcdao.getCircleName(1));
 		//System.out.println(jdbcdao.getCircleFromID(1).getId() + ", " + jdbcdao.getCircleFromID(1).getName());
 		
-		System.out.println(jdbcdao.getAllCircles().get(0).getName());
+		//jdbcdao.insertCircle(new Circle(5,"Fifth Circle"));
+		System.out.println(jdbcdao.getAllCircles().size());
+		
+		//jdbcdao.createTriangleTable();
 		
 	}
 
