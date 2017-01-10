@@ -17,7 +17,6 @@ import com.jfsaaved.model.Circle;
 @Component
 public class JDBCDataAccessObject {
 	
-	
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
