@@ -18,7 +18,10 @@ public class Main {
 		//Circle circle = jdbcdao.getCircle(1);
 		//System.out.println(circle.getName());
 		
-		System.out.println(jdbcdao.getCircleCount());
+		//System.out.println(jdbcdao.getCircleName(1));
+		//System.out.println(jdbcdao.getCircleFromID(1).getId() + ", " + jdbcdao.getCircleFromID(1).getName());
+		
+		System.out.println(jdbcdao.getAllCircles().get(0).getName());
 		
 	}
 

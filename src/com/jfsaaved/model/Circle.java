@@ -5,6 +5,10 @@ public class Circle {
 	private int id;
 	private String name;
 	
+	public Circle () {
+		
+	}
+	
 	public Circle(int id, String name) {
 		this.id = id;
 		this.setName(name);
